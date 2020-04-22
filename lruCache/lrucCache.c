@@ -15,7 +15,7 @@
 //Method to create new Queue node and assign pagenumber to it.
 static struct QNode* createNewNode(unsigned int page_num)
 {
-  struct QNode* node = (struct QNode*)malloc(sizeof(struct QNode));
+  struct QNode* node = (struct QNode*)calloc(1, sizeof(struct QNode));
   node->page_num = page_num;
   node->prev = node->next = NULL_NODE;  // Double Linked list node
   return node;
@@ -24,7 +24,7 @@ static struct QNode* createNewNode(unsigned int page_num)
 static struct Queue* createNewQueue( unsigned int total_frames )
 {
   struct Queue* queue = NULL_Q;
-  if( !( queue = (struct Queue*)malloc( sizeof(struct Queue) ) ) ) {
+  if( !( queue = (struct Queue*)calloc( 1, sizeof(struct Queue) ) ) ) {
       return NULL_Q;
     }
   //As Queue is created first time. So the queue is empty
@@ -39,11 +39,11 @@ static struct Queue* createNewQueue( unsigned int total_frames )
 static struct Hash* createNewHash( unsigned int capcity )
 {
   struct Hash* hash = NULL_HASH;
-  if( !(hash = (struct Hash*)malloc(sizeof (struct Hash) ) ) ) {
+  if( !(hash = (struct Hash*)calloc(1, sizeof (struct Hash) ) ) ) {
       return NULL_HASH;
     }
   hash->capacity = capcity;
-  hash->Q_array = (struct QNode**)malloc(hash->capacity * sizeof(struct QNode*));
+  hash->Q_array = (struct QNode**)calloc(hash->capacity, sizeof(struct QNode*));
   return hash;
 }
 
@@ -90,7 +90,7 @@ static void enQueueAndAddRefrenceInHash( struct Queue* q,
       hash->Q_array[ q->rear->page_num ] = NULL_NODE;
       deQueue(q);
     }
-  //Now create a new node and assign page number to it, then attach new node to the front of queue node
+  //Now create a new node and assign page number to it, then attach new node to the front of queue node1
   struct QNode* node = createNewNode( page_num );
   node->next = q->front;
   if( isQueueEmpty(q) ) {
